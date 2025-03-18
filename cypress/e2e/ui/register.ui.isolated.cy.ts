@@ -1,4 +1,7 @@
+/// <reference types="cypress" />
+
 import { getRandomUser } from "../../generators/userGenerator"
+import { registerMocks } from "../../mocks/registerMocks"
 import { toast } from "../../pages/components/toast"
 import { registerPage } from "../../pages/registerPage"
 
@@ -10,6 +13,7 @@ describe('Register tests in isolation', () => {
     it('should successfully register new user', () => {
         // given
         const user = getRandomUser()
+        registerMocks.mockSuccess()
 
         // when
         registerPage.attemptRegister(user)
@@ -18,10 +22,11 @@ describe('Register tests in isolation', () => {
         toast.verifySuccess('Registration successful! You can now log in.')
         cy.url().should('contain', '/login')
     })
+
     it('should fail to register if user already exists', () => {
         // given
         const user = getRandomUser()
-        cy.register(user)
+        registerMocks.mockUserAlreadyExists()
 
         // when
         registerPage.attemptRegister(user)

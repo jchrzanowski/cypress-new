@@ -61,7 +61,9 @@ describe('Navbar tests', () => {
         cy.get('button').contains('Sign in').should('be.visible')
     })
 
+
     it('should logout on mobile view', () => {
+
         // given
         // cy.visit('/')
         cy.viewport(393, 852) // iPhone 15 viewport

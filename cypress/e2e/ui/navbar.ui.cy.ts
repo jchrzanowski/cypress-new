@@ -3,7 +3,6 @@
 import { getRandomUser } from "../../generators/userGenerator"
 import { cartMocks } from "../../mocks/cartMocks"
 import { navbar } from "../../pages/components/navbar"
-import { loginPage } from "../../pages/loginPage"
 import { User } from "../../types/user"
 
 describe('Navbar tests', () => {
@@ -56,6 +55,21 @@ describe('Navbar tests', () => {
 
         // when
         navbar.clickLogout()
+
+        // then
+        cy.url().should('contain', '/login')
+        cy.get('button').contains('Sign in').should('be.visible')
+    })
+
+    it('should logout on movile view', () => {
+        // given
+        // cy.visit('/')
+        cy.viewport(393, 852) // iPhone 15 viewport
+        cy.visit('')
+
+        // when
+        navbar.clickMobileHamburgerMenu()
+        navbar.clickLogoutOnMobileMenu()
 
         // then
         cy.url().should('contain', '/login')
